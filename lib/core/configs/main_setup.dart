@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:palm_book/core/configs/log.dart';
 import 'package:palm_book/core/styles/colors.dart';
+import 'package:palm_book/core/utils/http_client.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MainSetup {
   static String baseUrl = "https://gutendex.com";
@@ -19,5 +22,11 @@ class MainSetup {
         statusBarIconBrightness: Brightness.dark,
       ),
     );
+
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+    final prefs = await SharedPreferences.getInstance();
+    Get.put<SharedPreferences>(prefs, permanent: true);
+    Get.put<HttpClient>(HttpClient(prefs), permanent: true);
   }
 }

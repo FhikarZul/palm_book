@@ -6,8 +6,8 @@ import 'package:palm_book/core/styles/typography.dart';
 import 'package:palm_book/presentation/routes/app_pages.dart';
 import 'package:palm_book/presentation/routes/app_route.dart';
 
-void main() {
-  MainSetup.create();
+void main() async {
+  await MainSetup.create();
   runApp(const MyApp());
 }
 
