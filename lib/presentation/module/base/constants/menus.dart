@@ -1,5 +1,5 @@
 import 'package:heroicons/heroicons.dart';
-import 'package:palm_book/presentation/module/base/constants/menu_key.dart';
+import 'package:palm_book/core/constants/menu_key.dart';
 
 List<MenuModel> menus = [
   MenuModel(key: MenuKey.home, name: "Home", icon: HeroIcons.home),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:palm_book/core/styles/colors.dart';
 import 'package:palm_book/core/styles/typography.dart';
-import 'package:palm_book/presentation/module/base/constants/menu_key.dart';
+import 'package:palm_book/core/constants/menu_key.dart';
 import 'package:palm_book/presentation/module/base/constants/menus.dart';
 
 class BottomNavigation extends StatelessWidget {
