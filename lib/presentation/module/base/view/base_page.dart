@@ -11,27 +11,26 @@ class BasePage extends GetView<BaseController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Obx(
-          () => Column(
-            children: [
-              Flexible(
-                child: SizedBox(
-                  width: double.infinity,
-                  height: double.infinity,
-                  child: pages.firstWhere(
-                    (e) => e.key == Key(controller.selectedMenu.value.name),
-                  ),
+      resizeToAvoidBottomInset: false,
+      body: Obx(
+        () => Column(
+          children: [
+            Flexible(
+              child: SizedBox(
+                width: double.infinity,
+                height: double.infinity,
+                child: pages.firstWhere(
+                  (e) => e.key == Key(controller.selectedMenu.value.name),
                 ),
               ),
-              BottomNavigation(
-                selectedMenu: controller.selectedMenu.value,
-                onChanged: (menu) {
-                  controller.selectedMenu.value = menu;
-                },
-              ),
-            ],
-          ),
+            ),
+            BottomNavigation(
+              selectedMenu: controller.selectedMenu.value,
+              onChanged: (menu) {
+                controller.selectedMenu.value = menu;
+              },
+            ),
+          ],
         ),
       ),
     );
