@@ -7,7 +7,7 @@ class GetBookUsercase {
 
   GetBookUsercase(this.repository);
 
-  Future<Either<String, List<BookEntity>>> call(int page) {
-    return repository.getBooks(page);
+  Future<Either<String, BookEntity>> call(int id) {
+    return repository.getBook(id);
   }
 }
