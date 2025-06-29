@@ -1,6 +1,6 @@
-import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:palm_book/data/datasource/remotes/book_remote_datasource.dart';
+import 'package:palm_book/core/utils/http_client.dart';
+import 'package:palm_book/data/datasource/remotes/book_remote_source.dart';
 import 'package:palm_book/data/repositories/book_repository_impl.dart';
 import 'package:palm_book/domain/repositories/book_repository.dart';
 import 'package:palm_book/domain/usecases/get_book_usecase.dart';
@@ -11,11 +11,10 @@ import 'package:palm_book/presentation/module/home/controller/home_controller.da
 class BaseBinding implements Bindings {
   @override
   void dependencies() {
-    // http client
-    Get.lazyPut(() => Dio());
-
     // remote source
-    Get.lazyPut<BookRemoteSource>(() => BookRemoteSourceImpl(Get.find<Dio>()));
+    Get.lazyPut<BookRemoteSource>(
+      () => BookRemoteSourceImpl(Get.find<HttpClient>()),
+    );
 
     // repository
     Get.lazyPut<BookRepository>(
