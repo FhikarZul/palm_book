@@ -7,7 +7,10 @@ class GetBooksUsecase {
 
   GetBooksUsecase(this.repository);
 
-  Future<Either<String, List<BookEntity>>> call(int page) {
-    return repository.getBooks(page);
+  Future<Either<String, List<BookEntity>>> call({
+    required int page,
+    required String search,
+  }) {
+    return repository.getBooks(page: page, search: search);
   }
 }
