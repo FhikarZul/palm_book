@@ -6,7 +6,6 @@ class BookEntity {
   final String title;
   final List<AuthorEntity> authors;
   final List<String> summaries;
-  final List<String> translators;
   final List<String> subjects;
   final List<String> bookshelves;
   final List<String> languages;
@@ -20,7 +19,6 @@ class BookEntity {
     required this.title,
     required this.authors,
     required this.summaries,
-    required this.translators,
     required this.subjects,
     required this.bookshelves,
     required this.languages,

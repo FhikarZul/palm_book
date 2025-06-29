@@ -8,7 +8,6 @@ class BookModelDto extends BookEntity {
     required super.title,
     required super.authors,
     required super.summaries,
-    required super.translators,
     required super.subjects,
     required super.bookshelves,
     required super.languages,
@@ -26,7 +25,6 @@ class BookModelDto extends BookEntity {
           .map((author) => AuthorModelDto.fromJson(author))
           .toList(),
       summaries: List<String>.from(json['summaries']),
-      translators: List<String>.from(json['translators']),
       subjects: List<String>.from(json['subjects']),
       bookshelves: List<String>.from(json['bookshelves']),
       languages: List<String>.from(json['languages']),
