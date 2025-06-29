@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:palm_book/core/styles/colors.dart';
 import 'package:palm_book/core/styles/typography.dart';
 
-class ListLazyLoadWrapper extends StatefulWidget {
+class GridLazyLoadWrapper extends StatefulWidget {
   final int page;
   final EdgeInsetsGeometry? padding;
   final ScrollController? controller;
@@ -14,7 +14,7 @@ class ListLazyLoadWrapper extends StatefulWidget {
   final Function(double)? onScrollPosition;
   final String? emptyMessage;
 
-  const ListLazyLoadWrapper({
+  const GridLazyLoadWrapper({
     super.key,
     this.controller,
     required this.page,
@@ -29,10 +29,10 @@ class ListLazyLoadWrapper extends StatefulWidget {
   });
 
   @override
-  State<ListLazyLoadWrapper> createState() => _ListLazyLoadWrapperState();
+  State<GridLazyLoadWrapper> createState() => _GridLazyLoadWrapperState();
 }
 
-class _ListLazyLoadWrapperState extends State<ListLazyLoadWrapper> {
+class _GridLazyLoadWrapperState extends State<GridLazyLoadWrapper> {
   late ScrollController _scrollController;
 
   @override
@@ -94,10 +94,16 @@ class _ListLazyLoadWrapperState extends State<ListLazyLoadWrapper> {
           else
             SliverPadding(
               padding: widget.padding ?? EdgeInsets.zero,
-              sliver: SliverList(
+              sliver: SliverGrid(
                 delegate: SliverChildBuilderDelegate(
                   widget.itemBuilder,
                   childCount: widget.itemCount,
+                ),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  childAspectRatio: 0.75,
                 ),
               ),
             ),
@@ -147,6 +153,6 @@ class _ListLazyLoadWrapperState extends State<ListLazyLoadWrapper> {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.offset;
 
-    return currentScroll >= (maxScroll);
+    return currentScroll >= maxScroll;
   }
 }
