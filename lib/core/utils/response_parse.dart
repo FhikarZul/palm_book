@@ -1,13 +1,11 @@
-import 'dart:convert';
-
 class ResponseParse {
-  static dynamic dataParse(String source) {
-    final meta = jsonDecode(source)['results'];
+  static dynamic dataParse(dynamic source) {
+    final meta = source['results'];
     return meta;
   }
 
-  static dynamic messageParse(String source) {
-    final meta = jsonDecode(source)['detail'];
+  static dynamic messageParse(dynamic source) {
+    final meta = source['detail'];
     return meta;
   }
 }
