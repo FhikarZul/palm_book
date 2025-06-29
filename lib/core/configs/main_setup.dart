@@ -4,7 +4,7 @@ import 'package:palm_book/core/configs/log.dart';
 import 'package:palm_book/core/styles/colors.dart';
 
 class MainSetup {
-  static String baseUrl = "BASE_URL/api";
+  static String baseUrl = "https://gutendex.com";
 
   static create() async {
     WidgetsFlutterBinding.ensureInitialized();
