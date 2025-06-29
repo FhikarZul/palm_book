@@ -1,17 +1,20 @@
 import 'package:dartz/dartz.dart';
 import 'package:palm_book/core/configs/main_setup.dart';
 import 'package:palm_book/core/errors/response_error.dart';
+import 'package:palm_book/core/utils/http_client.dart';
 import 'package:palm_book/core/utils/response_parse.dart';
 import 'package:palm_book/data/models/book_model_dto.dart';
-import 'package:dio/dio.dart';
 
 abstract class BookRemoteSource {
-  Future<Either<ResponseException, List<BookModelDto>>> getBooks(int page);
+  Future<Either<ResponseException, List<BookModelDto>>> getBooks({
+    required int page,
+    required String search,
+  });
   Future<Either<ResponseException, BookModelDto>> getBook(int id);
 }
 
 class BookRemoteSourceImpl extends BookRemoteSource {
-  final Dio dio;
+  final HttpClient dio;
 
   BookRemoteSourceImpl(this.dio);
 
@@ -38,11 +41,14 @@ class BookRemoteSourceImpl extends BookRemoteSource {
   }
 
   @override
-  Future<Either<ResponseException, List<BookModelDto>>> getBooks(
-    int page,
-  ) async {
+  Future<Either<ResponseException, List<BookModelDto>>> getBooks({
+    required int page,
+    required String search,
+  }) async {
     try {
-      final response = await dio.get("${MainSetup.baseUrl}/books?page=$page");
+      final response = await dio.getPaginated(
+        "${MainSetup.baseUrl}/books?page=$page&search=$search",
+      );
 
       if (response.statusCode == 200) {
         return Right(
