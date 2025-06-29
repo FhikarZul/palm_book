@@ -10,12 +10,18 @@ class HomeController extends GetxController {
   RxBool isLoadingPaginate = false.obs;
   RxBool isError = false.obs;
   RxString message = "".obs;
+  RxString search = "".obs;
 
   HomeController(this.booksUsecase);
 
   @override
   void onInit() {
     getBooks(true);
+
+    debounce(search, (value) async {
+      await getBooks(true);
+    }, time: const Duration(milliseconds: 500));
+
     super.onInit();
   }
 
@@ -25,11 +31,15 @@ class HomeController extends GetxController {
     if (refresh) {
       page.value = 1;
       isLoading.value = true;
+      isLoadingPaginate.value = false;
     } else {
       isLoadingPaginate.value = true;
     }
 
-    final result = await booksUsecase.call(page.value);
+    final result = await booksUsecase.call(
+      page: page.value,
+      search: search.value,
+    );
 
     result.fold(
       (error) {

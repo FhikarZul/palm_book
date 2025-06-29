@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:palm_book/core/constants/menu_key.dart';
 import 'package:palm_book/presentation/module/home/controller/home_controller.dart';
-import 'package:palm_book/presentation/widgets/lazy_load_wrapper.dart';
+import 'package:palm_book/presentation/module/home/widgets/search_field.dart';
+import 'package:palm_book/presentation/widgets/grid_lazy_load_wrapper.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
@@ -9,27 +11,37 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => controller.isLoading.value
-          ? CircularProgressIndicator()
-          : ListLazyLoadWrapper(
-              page: controller.page.value,
-              itemCount: controller.books.length,
-              itemBuilder: (context, index) {
-                final item = controller.books[index];
-                return Text(item.title);
-              },
-              isLoading: controller.isLoadingPaginate.value,
-              onChanged: (page) {
-                controller.page.value = page;
-                controller.getBooks(false);
-              },
-              onRefresh: () {
-                controller.getBooks(true);
-              },
-              onScrollPosition: (position) {
-                print(position);
-              },
-            ),
+      () => Column(
+        children: [
+          SearchField(
+            text: controller.search.value,
+            onChanged: (text) {
+              controller.search.value = text;
+            },
+          ),
+          controller.isLoading.value
+              ? CircularProgressIndicator()
+              : Expanded(
+                  child: GridLazyLoadWrapper(
+                    key: const PageStorageKey(MenuKey.home),
+                    page: controller.page.value,
+                    itemCount: controller.books.length,
+                    itemBuilder: (context, index) {
+                      final item = controller.books[index];
+                      return Column(children: [Text(item.title)]);
+                    },
+                    isLoading: controller.isLoadingPaginate.value,
+                    onChanged: (page) {
+                      controller.page.value = page;
+                      controller.getBooks(false);
+                    },
+                    onRefresh: () {
+                      controller.getBooks(true);
+                    },
+                  ),
+                ),
+        ],
+      ),
     );
   }
 }
