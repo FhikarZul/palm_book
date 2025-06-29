@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:palm_book/data/datasource/remotes/book_remote_datasource.dart';
+import 'package:palm_book/data/datasource/remotes/book_remote_source.dart';
 import 'package:palm_book/domain/entities/book_entity.dart';
 import 'package:palm_book/domain/repositories/book_repository.dart';
 
@@ -23,8 +23,11 @@ class BookRepositoryImpl extends BookRepository {
   }
 
   @override
-  Future<Either<String, List<BookEntity>>> getBooks(int page) async {
-    final result = await remoteSource.getBooks(page);
+  Future<Either<String, List<BookEntity>>> getBooks({
+    required int page,
+    required String search,
+  }) async {
+    final result = await remoteSource.getBooks(page: page, search: search);
 
     return result.fold(
       (error) {
