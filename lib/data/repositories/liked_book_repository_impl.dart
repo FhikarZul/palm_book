@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:palm_book/data/datasource/locals/liked_book_local_source.dart';
-import 'package:palm_book/data/models/dao/liked_book_dao.dart';
+import 'package:palm_book/data/model/dao/liked_book_dao.dart';
 import 'package:palm_book/domain/entities/liked_book_entity.dart';
 import 'package:palm_book/domain/repositories/liked_book_repository.dart';
 

@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:palm_book/core/utils/http_client.dart';
 import 'package:palm_book/data/datasource/locals/liked_book_local_source.dart';
 import 'package:palm_book/data/datasource/remotes/book_remote_source.dart';
-import 'package:palm_book/data/models/dao/liked_book_dao.dart';
+import 'package:palm_book/data/model/dao/liked_book_dao.dart';
 import 'package:palm_book/data/repositories/book_repository_impl.dart';
 import 'package:palm_book/data/repositories/liked_book_repository_impl.dart';
 import 'package:palm_book/domain/repositories/book_repository.dart';

@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:hive/hive.dart';
-import 'package:palm_book/data/models/dao/liked_book_dao.dart';
+import 'package:palm_book/data/model/dao/liked_book_dao.dart';
 
 abstract class LikedBookLocalSource {
   Either<Exception, List<LikedBookDao>> getLikedBooks();

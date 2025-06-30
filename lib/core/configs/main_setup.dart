@@ -6,7 +6,7 @@ import 'package:palm_book/core/configs/log.dart';
 import 'package:palm_book/core/constants/hive_db.dart';
 import 'package:palm_book/core/styles/colors.dart';
 import 'package:palm_book/core/utils/http_client.dart';
-import 'package:palm_book/data/models/dao/liked_book_dao.dart';
+import 'package:palm_book/data/model/dao/liked_book_dao.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MainSetup {
