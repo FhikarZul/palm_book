@@ -37,11 +37,11 @@ class _SearchFieldState extends State<SearchField> {
               controller: controller,
               hintText: "What book are you looking for?",
               hintStyle: WidgetStatePropertyAll(
-                TextStyle(fontWeight: FontWeight.w200),
+                TextStyle(fontWeight: FontWeight.w200, fontSize: 14),
               ),
               elevation: WidgetStatePropertyAll(0),
               constraints: BoxConstraints(minHeight: 45, maxHeight: 45),
-              leading: HeroIcon(HeroIcons.magnifyingGlass),
+              leading: HeroIcon(HeroIcons.magnifyingGlass, color: kNeutral70),
               trailing: [
                 if (widget.text.isNotEmpty)
                   InkResponse(
