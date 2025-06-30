@@ -8,6 +8,7 @@ class DetailController extends GetxController {
   Rx<BookEntity> book = BookEntity.initial().obs;
   RxBool isLoading = false.obs;
   RxBool isError = false.obs;
+  RxString message = "".obs;
 
   DetailController(this.getBookUsecase);
 
@@ -26,6 +27,7 @@ class DetailController extends GetxController {
     result.fold(
       (error) {
         isError.value = true;
+        message.value = error;
       },
       (data) async {
         book.value = data;
