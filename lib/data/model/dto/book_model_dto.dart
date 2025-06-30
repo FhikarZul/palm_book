@@ -1,5 +1,5 @@
-import 'package:palm_book/data/models/dto/author_model_dto.dart';
-import 'package:palm_book/data/models/dto/formats_model_dto.dart';
+import 'package:palm_book/data/model/dto/author_model_dto.dart';
+import 'package:palm_book/data/model/dto/formats_model_dto.dart';
 import 'package:palm_book/domain/entities/book_entity.dart';
 
 class BookModelDto extends BookEntity {

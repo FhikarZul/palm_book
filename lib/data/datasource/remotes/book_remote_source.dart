@@ -3,7 +3,7 @@ import 'package:palm_book/core/configs/main_setup.dart';
 import 'package:palm_book/core/errors/response_error.dart';
 import 'package:palm_book/core/utils/http_client.dart';
 import 'package:palm_book/core/utils/response_parse.dart';
-import 'package:palm_book/data/models/book_model_dto.dart';
+import 'package:palm_book/data/model/dto/book_model_dto.dart';
 
 abstract class BookRemoteSource {
   Future<Either<ResponseException, List<BookModelDto>>> getBooks({
