@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:palm_book/core/styles/colors.dart';
-import 'package:palm_book/core/styles/typography.dart';
+import 'package:palm_book/presentation/widgets/empty_data_view.dart';
 
 class GridLazyLoadWrapper extends StatefulWidget {
   final int page;
@@ -12,7 +12,6 @@ class GridLazyLoadWrapper extends StatefulWidget {
   final bool isLoading;
   final Function()? onRefresh;
   final Function(double)? onScrollPosition;
-  final String? emptyMessage;
   final double childAspectRatio;
 
   const GridLazyLoadWrapper({
@@ -25,7 +24,6 @@ class GridLazyLoadWrapper extends StatefulWidget {
     required this.onChanged,
     this.padding,
     this.onRefresh,
-    this.emptyMessage,
     this.onScrollPosition,
     this.childAspectRatio = 1.0,
   });
@@ -36,17 +34,12 @@ class GridLazyLoadWrapper extends StatefulWidget {
 
 class _GridLazyLoadWrapperState extends State<GridLazyLoadWrapper> {
   late ScrollController _scrollController;
+  bool _isFetching = false;
 
   @override
   void initState() {
     super.initState();
-
-    if (widget.controller == null) {
-      _scrollController = ScrollController();
-    } else {
-      _scrollController = widget.controller!;
-    }
-
+    _scrollController = widget.controller ?? ScrollController();
     _scrollController.addListener(_onScroll);
   }
 
@@ -56,13 +49,16 @@ class _GridLazyLoadWrapperState extends State<GridLazyLoadWrapper> {
       _scrollController
         ..removeListener(_onScroll)
         ..dispose();
+    } else {
+      _scrollController.removeListener(_onScroll);
     }
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final padding = widget.padding ?? const EdgeInsets.all(12.0);
+
     return RefreshIndicator(
       onRefresh: () async {
         await Future.delayed(const Duration(milliseconds: 800));
@@ -71,11 +67,12 @@ class _GridLazyLoadWrapperState extends State<GridLazyLoadWrapper> {
       child: CustomScrollView(
         controller: _scrollController,
         physics: const AlwaysScrollableScrollPhysics(),
+        cacheExtent: 1000,
         slivers: [
           if (widget.itemCount == 0)
             SliverToBoxAdapter(
               child: Padding(
-                padding: widget.padding ?? EdgeInsets.zero,
+                padding: padding,
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
@@ -84,86 +81,75 @@ class _GridLazyLoadWrapperState extends State<GridLazyLoadWrapper> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      widget.emptyMessage ?? "No data",
-                      style: kCaption1.copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
+                    child: EmptyDataView(),
                   ),
                 ),
               ),
             )
           else
-            SliverLayoutBuilder(
-              builder: (context, constraints) {
-                final screenWidth = constraints.crossAxisExtent;
-                const itemWidth = 160.0;
-                final crossAxisCount = screenWidth ~/ itemWidth;
-                const spacing = 12.0;
-
-                return SliverPadding(
-                  padding: widget.padding ?? EdgeInsets.zero,
-                  sliver: SliverGrid(
-                    delegate: SliverChildBuilderDelegate(
-                      widget.itemBuilder,
-                      childCount: widget.itemCount,
-                    ),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: crossAxisCount,
-                      crossAxisSpacing: spacing,
-                      mainAxisSpacing: spacing,
-                      childAspectRatio: widget.childAspectRatio,
-                    ),
-                  ),
-                );
-              },
-            ),
-          SliverToBoxAdapter(
-            child: Column(
-              children: [
-                const SizedBox(height: 4),
-                SizedBox(
-                  height: 30,
-                  child: widget.isLoading
-                      ? const Center(
-                          child: SizedBox(
-                            width: 30,
-                            height: 30,
-                            child: CircularProgressIndicator(),
-                          ),
-                        )
-                      : const SizedBox(),
+            SliverPadding(
+              padding: padding,
+              sliver: SliverGrid(
+                delegate: SliverChildBuilderDelegate(
+                  widget.itemBuilder,
+                  childCount: widget.itemCount,
+                  addRepaintBoundaries: true,
+                  addAutomaticKeepAlives: true,
                 ),
-                const SizedBox(height: 4),
-              ],
+                gridDelegate: _buildGridDelegate(context),
+              ),
             ),
-          ),
+          if (widget.isLoading)
+            const SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 16.0),
+                child: Center(
+                  child: SizedBox(
+                    width: 30,
+                    height: 30,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     );
   }
 
-  int resolvePage() {
-    return widget.page == 0 ? 1 : widget.page;
+  SliverGridDelegate _buildGridDelegate(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    const itemWidth = 160.0;
+    const spacing = 12.0;
+    final crossAxisCount = screenWidth ~/ itemWidth;
+
+    return SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: crossAxisCount,
+      crossAxisSpacing: spacing,
+      mainAxisSpacing: spacing,
+      childAspectRatio: widget.childAspectRatio,
+    );
   }
 
+  int resolvePage() => widget.page == 0 ? 1 : widget.page;
+
   void _onScroll() {
-    if (_isBottom) {
-      int page = resolvePage();
-      widget.onChanged.call(page + 1);
+    if (_isBottom && !_isFetching) {
+      _isFetching = true;
+      final page = resolvePage();
+      widget.onChanged(page + 1);
+      Future.delayed(const Duration(milliseconds: 500), () {
+        _isFetching = false;
+      });
     }
 
-    if (widget.onScrollPosition != null) {
-      widget.onScrollPosition!.call(_scrollController.position.pixels);
-    }
+    widget.onScrollPosition?.call(_scrollController.position.pixels);
   }
 
   bool get _isBottom {
     if (!_scrollController.hasClients) return false;
-
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.offset;
-
-    return currentScroll >= maxScroll;
+    return currentScroll >= (maxScroll - 100);
   }
 }
