@@ -21,12 +21,10 @@ class BookRemoteSourceImpl extends BookRemoteSource {
   @override
   Future<Either<ResponseException, BookModelDto>> getBook(int id) async {
     try {
-      final response = await dio.get("${MainSetup.baseUrl}/$id");
+      final response = await dio.get("${MainSetup.baseUrl}/books/$id");
 
       if (response.statusCode == 200) {
-        return Right(
-          BookModelDto.fromJson(ResponseParse.messageParse(response.data)),
-        );
+        return Right(BookModelDto.fromJson(response.data));
       }
 
       return Left(
