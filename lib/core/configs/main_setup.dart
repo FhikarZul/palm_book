@@ -23,8 +23,6 @@ class MainSetup {
       ),
     );
 
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-
     final prefs = await SharedPreferences.getInstance();
     Get.put<SharedPreferences>(prefs, permanent: true);
     Get.put<HttpClient>(HttpClient(prefs), permanent: true);
