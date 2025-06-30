@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:palm_book/core/styles/colors.dart';
 import 'package:palm_book/presentation/widgets/shimmer_card.dart';
 
 class CachedImage extends StatelessWidget {
-  final String url;
+  final String? url;
   final double? height;
   final double? width;
   final BorderRadiusGeometry borderRadius;
@@ -22,24 +23,33 @@ class CachedImage extends StatelessWidget {
     return ClipRRect(
       borderRadius: borderRadius,
 
-      child: CachedNetworkImage(
-        imageUrl: url,
-        fit: BoxFit.cover,
-        height: height,
-        width: width,
-        placeholder: (context, url) => ShimmerCard(),
-        errorWidget: (context, url, error) {
-          return Container(
-            height: height,
-            width: width,
-            color: kNeutral20,
-            child: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Center(child: Icon(Icons.broken_image, color: kNeutral70)),
+      child: url == null
+          ? Container(
+              color: kNeutral10,
+              height: height,
+              width: width,
+              child: HeroIcon(HeroIcons.photo, color: kNeutral50),
+            )
+          : CachedNetworkImage(
+              imageUrl: url!,
+              fit: BoxFit.cover,
+              height: height,
+              width: width,
+              placeholder: (context, url) => ShimmerCard(),
+              errorWidget: (context, url, error) {
+                return Container(
+                  height: height,
+                  width: width,
+                  color: kNeutral20,
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Center(
+                      child: Icon(Icons.broken_image, color: kNeutral70),
+                    ),
+                  ),
+                );
+              },
             ),
-          );
-        },
-      ),
     );
   }
 }
