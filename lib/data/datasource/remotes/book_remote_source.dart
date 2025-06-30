@@ -46,8 +46,9 @@ class BookRemoteSourceImpl extends BookRemoteSource {
     required String search,
   }) async {
     try {
-      final response = await dio.getPaginated(
-        "${MainSetup.baseUrl}/books?page=$page&search=$search",
+      final response = await dio.get(
+        "${MainSetup.baseUrl}/books",
+        query: {'page': page.toString(), 'search': search},
       );
 
       if (response.statusCode == 200) {
