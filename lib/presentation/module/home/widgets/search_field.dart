@@ -4,16 +4,22 @@ import 'package:palm_book/core/styles/colors.dart';
 
 class SearchField extends StatefulWidget {
   final String text;
+  final bool enable;
   final Function(String) onChanged;
 
-  const SearchField({super.key, required this.onChanged, required this.text});
+  const SearchField({
+    super.key,
+    required this.onChanged,
+    required this.text,
+    this.enable = true,
+  });
 
   @override
   State<SearchField> createState() => _SearchFieldState();
 }
 
 class _SearchFieldState extends State<SearchField> {
-  TextEditingController? controller = null;
+  TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +40,7 @@ class _SearchFieldState extends State<SearchField> {
           Padding(
             padding: const EdgeInsets.only(bottom: 12, left: 14, right: 14),
             child: SearchBar(
+              enabled: widget.enable,
               controller: controller,
               hintText: "What book are you looking for?",
               hintStyle: WidgetStatePropertyAll(
