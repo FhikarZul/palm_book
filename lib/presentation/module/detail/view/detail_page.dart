@@ -30,8 +30,20 @@ class DetailPage extends GetView<DetailController> {
           actions: [
             if (!(controller.isLoading.value || controller.isError.value))
               InkResponse(
-                onTap: () {},
-                child: HeroIcon(HeroIcons.heart, color: kPrimaryMain),
+                onTap: () {
+                  if (controller.isLikedBook.value) {
+                    controller.deleteLikedBook();
+                  } else {
+                    controller.likedBook();
+                  }
+                },
+                child: HeroIcon(
+                  HeroIcons.heart,
+                  color: kPrimaryMain,
+                  style: controller.isLikedBook.value
+                      ? HeroIconStyle.solid
+                      : HeroIconStyle.outline,
+                ),
               ),
           ],
           actionsPadding: EdgeInsets.only(right: 14),
