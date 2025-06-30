@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:palm_book/core/constants/menu_key.dart';
 import 'package:palm_book/presentation/module/home/controller/home_controller.dart';
 import 'package:palm_book/presentation/module/home/widgets/book_item.dart';
+import 'package:palm_book/presentation/module/home/widgets/book_loading.dart';
 import 'package:palm_book/presentation/module/home/widgets/search_field.dart';
+import 'package:palm_book/presentation/routes/app_route.dart';
 import 'package:palm_book/presentation/widgets/grid_lazy_load_wrapper.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -15,13 +17,16 @@ class HomeView extends GetView<HomeController> {
       () => Column(
         children: [
           SearchField(
+            enable:
+                !(controller.isLoading.value ||
+                    controller.isLoadingPaginate.value),
             text: controller.search.value,
             onChanged: (text) {
               controller.search.value = text;
             },
           ),
           controller.isLoading.value
-              ? CircularProgressIndicator()
+              ? BookLoading()
               : Expanded(
                   child: GridLazyLoadWrapper(
                     key: const PageStorageKey(MenuKey.home),
@@ -31,7 +36,12 @@ class HomeView extends GetView<HomeController> {
                     padding: EdgeInsets.all(16),
                     itemBuilder: (context, index) {
                       final item = controller.books[index];
-                      return BookItem(item: item);
+                      return BookItem(
+                        item: item,
+                        onPressed: () {
+                          Get.toNamed(AppRoutes.detail, arguments: item.id);
+                        },
+                      );
                     },
                     isLoading: controller.isLoadingPaginate.value,
                     onChanged: (page) {
