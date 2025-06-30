@@ -55,6 +55,7 @@ class HomeController extends GetxController {
       },
     );
 
+    isLoadingPaginate.value = false;
     isLoading.value = false;
   }
 }
