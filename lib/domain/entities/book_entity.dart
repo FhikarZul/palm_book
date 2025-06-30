@@ -27,4 +27,20 @@ class BookEntity {
     required this.formats,
     required this.downloadCount,
   });
+
+  factory BookEntity.initial() {
+    return BookEntity(
+      id: 0,
+      title: '',
+      authors: [],
+      summaries: [],
+      subjects: [],
+      bookshelves: [],
+      languages: [],
+      copyright: false,
+      mediaType: '',
+      formats: FormatEntity(),
+      downloadCount: 0,
+    );
+  }
 }
