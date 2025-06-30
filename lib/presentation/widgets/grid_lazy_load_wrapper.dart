@@ -13,6 +13,7 @@ class GridLazyLoadWrapper extends StatefulWidget {
   final Function()? onRefresh;
   final Function(double)? onScrollPosition;
   final String? emptyMessage;
+  final double childAspectRatio;
 
   const GridLazyLoadWrapper({
     super.key,
@@ -26,6 +27,7 @@ class GridLazyLoadWrapper extends StatefulWidget {
     this.onRefresh,
     this.emptyMessage,
     this.onScrollPosition,
+    this.childAspectRatio = 1.0,
   });
 
   @override
@@ -92,20 +94,29 @@ class _GridLazyLoadWrapperState extends State<GridLazyLoadWrapper> {
               ),
             )
           else
-            SliverPadding(
-              padding: widget.padding ?? EdgeInsets.zero,
-              sliver: SliverGrid(
-                delegate: SliverChildBuilderDelegate(
-                  widget.itemBuilder,
-                  childCount: widget.itemCount,
-                ),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                  childAspectRatio: 0.75,
-                ),
-              ),
+            SliverLayoutBuilder(
+              builder: (context, constraints) {
+                final screenWidth = constraints.crossAxisExtent;
+                const itemWidth = 160.0;
+                final crossAxisCount = screenWidth ~/ itemWidth;
+                const spacing = 12.0;
+
+                return SliverPadding(
+                  padding: widget.padding ?? EdgeInsets.zero,
+                  sliver: SliverGrid(
+                    delegate: SliverChildBuilderDelegate(
+                      widget.itemBuilder,
+                      childCount: widget.itemCount,
+                    ),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: crossAxisCount,
+                      crossAxisSpacing: spacing,
+                      mainAxisSpacing: spacing,
+                      childAspectRatio: widget.childAspectRatio,
+                    ),
+                  ),
+                );
+              },
             ),
           SliverToBoxAdapter(
             child: Column(
