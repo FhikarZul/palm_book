@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:palm_book/core/styles/colors.dart';
 import 'package:palm_book/presentation/module/base/constants/pages.dart';
 import 'package:palm_book/presentation/module/base/widgets/bottom_navigation.dart';
 
@@ -11,6 +12,7 @@ class BasePage extends GetView<BaseController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kNeutral10,
       resizeToAvoidBottomInset: false,
       body: Obx(
         () => Column(
