@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:palm_book/core/configs/log.dart';
+import 'package:palm_book/core/constants/hive_db.dart';
 import 'package:palm_book/core/styles/colors.dart';
 import 'package:palm_book/core/utils/http_client.dart';
+import 'package:palm_book/data/models/dao/liked_book_dao.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MainSetup {
@@ -23,8 +26,15 @@ class MainSetup {
       ),
     );
 
+    await Hive.initFlutter();
+    Hive.registerAdapter(LikedBookAdapter());
+    await Hive.openBox<LikedBookDao>(hiveDbName);
+
+    final box = Hive.box<LikedBookDao>(hiveDbName);
+    Get.lazyPut<Box<LikedBookDao>>(() => box, fenix: true);
+
     final prefs = await SharedPreferences.getInstance();
-    Get.put<SharedPreferences>(prefs, permanent: true);
-    Get.put<HttpClient>(HttpClient(prefs), permanent: true);
+    Get.lazyPut<SharedPreferences>(() => prefs, fenix: true);
+    Get.lazyPut<HttpClient>(() => HttpClient(prefs), fenix: true);
   }
 }
