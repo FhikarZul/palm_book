@@ -13,7 +13,8 @@ class EmptyDataView extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       children: [
         Center(child: Image.asset("assets/no_data.png", width: 100)),
-        Text("No data found", style: kSubHeadline.copyWith(color: kNeutral80)),
+        SizedBox(height: 8),
+        Text("No data found", style: kBodyText.copyWith(color: kNeutral80)),
       ],
     );
   }
