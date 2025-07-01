@@ -27,7 +27,7 @@ class MainSetup {
     );
 
     await Hive.initFlutter();
-    Hive.registerAdapter(LikedBookAdapter());
+    Hive.registerAdapter(LikedBookDaoAdapter());
     await Hive.openBox<LikedBookDao>(hiveDbName);
 
     final box = Hive.box<LikedBookDao>(hiveDbName);
