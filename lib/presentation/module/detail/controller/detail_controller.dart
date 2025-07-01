@@ -3,14 +3,19 @@ import 'package:palm_book/domain/entities/book_entity.dart';
 import 'package:palm_book/domain/entities/liked_book_entity.dart';
 import 'package:palm_book/domain/usecases/delete_liked_book_usecase.dart';
 import 'package:palm_book/domain/usecases/get_book_usecase.dart';
+import 'package:palm_book/domain/usecases/get_liked_books_usecase.dart';
 import 'package:palm_book/domain/usecases/is_liked_book_usecase.dart';
 import 'package:palm_book/domain/usecases/liked_book_usecase.dart';
+import 'package:palm_book/presentation/module/favorite/controller/favorite_controller.dart';
 
 class DetailController extends GetxController {
   final GetBookUsecase getBookUsecase;
   final LikedBookUsecase likedBookUsecase;
   final IsLikedBookUsecase isLikedBookUsecase;
   final DeleteLikedBookUsecase deleteLikedBookUsecase;
+  final GetLikedBooksUsecase getLikedBooksUsecase;
+  final favoriteController = Get.find<FavoriteController>();
+
   final id = Get.arguments;
   Rx<BookEntity> book = BookEntity.initial().obs;
   RxBool isLoading = false.obs;
@@ -23,6 +28,7 @@ class DetailController extends GetxController {
     required this.likedBookUsecase,
     required this.isLikedBookUsecase,
     required this.deleteLikedBookUsecase,
+    required this.getLikedBooksUsecase,
   });
 
   @override
@@ -78,6 +84,7 @@ class DetailController extends GetxController {
     }, (_) {});
 
     checkLikedBook();
+    favoriteController.getBooks();
   }
 
   void likedBook() {
@@ -98,5 +105,6 @@ class DetailController extends GetxController {
     }, (_) {});
 
     checkLikedBook();
+    favoriteController.getBooks();
   }
 }
