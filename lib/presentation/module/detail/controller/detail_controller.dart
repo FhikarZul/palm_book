@@ -27,19 +27,21 @@ class DetailController extends GetxController {
 
   @override
   void onInit() {
-    init();
+    loadData();
     super.onInit();
   }
 
-  void init() async {
-    await getBook();
-    checkLikedBook();
-  }
-
-  Future getBook() async {
+  void loadData() async {
     isLoading.value = true;
     isError.value = false;
 
+    await getBook();
+    checkLikedBook();
+
+    isLoading.value = false;
+  }
+
+  Future getBook() async {
     final result = await getBookUsecase.call(id);
 
     result.fold(
@@ -51,12 +53,9 @@ class DetailController extends GetxController {
         book.value = data;
       },
     );
-
-    isLoading.value = false;
   }
 
   void checkLikedBook() {
-    isError.value = false;
     final result = isLikedBookUsecase.call(id);
 
     result.fold(
@@ -71,7 +70,6 @@ class DetailController extends GetxController {
   }
 
   void deleteLikedBook() {
-    isError.value = false;
     final result = deleteLikedBookUsecase.call(id);
 
     result.fold((error) {

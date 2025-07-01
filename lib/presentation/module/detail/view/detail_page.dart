@@ -54,7 +54,7 @@ class DetailPage extends GetView<DetailController> {
             ? ConnectionErrorView(
                 message: controller.message.value,
                 onPressed: () {
-                  controller.getBook();
+                  controller.loadData();
                 },
               )
             : Stack(
@@ -62,7 +62,7 @@ class DetailPage extends GetView<DetailController> {
                   RefreshIndicator(
                     onRefresh: () async {
                       await Future.delayed(const Duration(milliseconds: 800));
-                      controller.getBook();
+                      controller.loadData();
                     },
                     child: SingleChildScrollView(
                       physics: AlwaysScrollableScrollPhysics(),
