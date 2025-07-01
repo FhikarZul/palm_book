@@ -9,12 +9,7 @@ class BookModelDto extends BookEntity {
     required super.authors,
     required super.summaries,
     required super.subjects,
-    required super.bookshelves,
-    required super.languages,
-    required super.copyright,
-    required super.mediaType,
     required super.formats,
-    required super.downloadCount,
   });
 
   factory BookModelDto.fromJson(Map<String, dynamic> json) {
@@ -26,12 +21,7 @@ class BookModelDto extends BookEntity {
           .toList(),
       summaries: List<String>.from(json['summaries']),
       subjects: List<String>.from(json['subjects']),
-      bookshelves: List<String>.from(json['bookshelves']),
-      languages: List<String>.from(json['languages']),
-      copyright: json['copyright'],
-      mediaType: json['media_type'],
       formats: FormatModelDto.fromJson(json['formats']),
-      downloadCount: json['download_count'],
     );
   }
 }
