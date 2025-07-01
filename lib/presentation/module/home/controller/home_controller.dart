@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:palm_book/core/utils/show_snackbar.dart';
 import 'package:palm_book/domain/entities/book_entity.dart';
 import 'package:palm_book/domain/usecases/get_books_usecase.dart';
 
@@ -22,6 +23,12 @@ class HomeController extends GetxController {
       await getBooks(true);
     }, time: const Duration(milliseconds: 500));
 
+    ever(isError, (val) {
+      if (val) {
+        showSnackbar(message.value);
+      }
+    });
+
     super.onInit();
   }
 
@@ -43,8 +50,8 @@ class HomeController extends GetxController {
 
     result.fold(
       (error) {
-        isError.value = true;
         message.value = error;
+        isError.value = true;
       },
       (data) {
         if (refresh) {
