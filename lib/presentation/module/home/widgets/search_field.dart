@@ -34,9 +34,7 @@ class _SearchFieldState extends State<SearchField> {
             width: double.infinity,
             fit: BoxFit.cover,
           ),
-          Container(
-            color: kPrimaryMain.withAlpha(80), // Foreground filter
-          ),
+          Container(color: kPrimaryMain.withAlpha(80)),
           Padding(
             padding: const EdgeInsets.only(bottom: 12, left: 14, right: 14),
             child: SearchBar(
