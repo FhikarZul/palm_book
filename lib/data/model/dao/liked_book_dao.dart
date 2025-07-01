@@ -17,11 +17,15 @@ class LikedBookDao extends HiveObject {
   @HiveField(3)
   final List<String> authors;
 
+  @HiveField(4)
+  final DateTime createdAt;
+
   LikedBookDao({
     required this.bookId,
     required this.title,
     required this.imageUrl,
     required this.authors,
+    required this.createdAt,
   });
 
   LikedBookEntity toEntity() {

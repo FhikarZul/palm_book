@@ -29,6 +29,7 @@ class LikedBookLocalSourceImpl extends LikedBookLocalSource {
   Either<Exception, List<LikedBookDao>> getLikedBooks() {
     try {
       List<LikedBookDao> books = box.values.toList();
+      books.sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
       return Right(books);
     } catch (e) {

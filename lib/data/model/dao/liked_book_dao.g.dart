@@ -6,7 +6,7 @@ part of 'liked_book_dao.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class LikedBookAdapter extends TypeAdapter<LikedBookDao> {
+class LikedBookDaoAdapter extends TypeAdapter<LikedBookDao> {
   @override
   final int typeId = 0;
 
@@ -21,13 +21,14 @@ class LikedBookAdapter extends TypeAdapter<LikedBookDao> {
       title: fields[1] as String,
       imageUrl: fields[2] as String,
       authors: (fields[3] as List).cast<String>(),
+      createdAt: fields[4] as DateTime,
     );
   }
 
   @override
   void write(BinaryWriter writer, LikedBookDao obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.bookId)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class LikedBookAdapter extends TypeAdapter<LikedBookDao> {
       ..writeByte(2)
       ..write(obj.imageUrl)
       ..writeByte(3)
-      ..write(obj.authors);
+      ..write(obj.authors)
+      ..writeByte(4)
+      ..write(obj.createdAt);
   }
 
   @override
@@ -44,7 +47,7 @@ class LikedBookAdapter extends TypeAdapter<LikedBookDao> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is LikedBookAdapter &&
+      other is LikedBookDaoAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

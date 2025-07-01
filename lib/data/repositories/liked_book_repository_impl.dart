@@ -55,6 +55,7 @@ class LikedBookRepositoryImpl extends LikedBookRepository {
       title: book.title,
       imageUrl: book.imageUrl,
       authors: book.authors,
+      createdAt: DateTime.now(),
     );
 
     final result = localSource.saveLikedBook(toDao);
