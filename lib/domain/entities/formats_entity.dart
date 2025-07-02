@@ -1,6 +1,11 @@
-class FormatEntity {
+import 'package:equatable/equatable.dart';
+
+class FormatEntity extends Equatable {
   final String? plainText;
   final String? imageJpeg;
 
-  FormatEntity({this.plainText, this.imageJpeg});
+  const FormatEntity({this.plainText, this.imageJpeg});
+
+  @override
+  List<Object?> get props => [plainText ?? "", imageJpeg ?? ""];
 }

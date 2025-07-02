@@ -1,7 +1,8 @@
+import 'package:equatable/equatable.dart';
 import 'package:palm_book/domain/entities/author_entity.dart';
 import 'package:palm_book/domain/entities/formats_entity.dart';
 
-class BookEntity {
+class BookEntity extends Equatable {
   final int id;
   final String title;
   final List<AuthorEntity> authors;
@@ -9,7 +10,7 @@ class BookEntity {
   final List<String> subjects;
   final FormatEntity formats;
 
-  BookEntity({
+  const BookEntity({
     required this.id,
     required this.title,
     required this.authors,
@@ -28,4 +29,7 @@ class BookEntity {
       formats: FormatEntity(),
     );
   }
+
+  @override
+  List<Object?> get props => [id, title, authors, summaries, subjects, formats];
 }
