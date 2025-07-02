@@ -17,7 +17,7 @@ class BookRepositoryImpl extends BookRepository {
         return Left(error.message);
       },
       (data) {
-        return Right(data);
+        return Right(data.toEntity());
       },
     );
   }
@@ -34,7 +34,7 @@ class BookRepositoryImpl extends BookRepository {
         return Left(error.message);
       },
       (data) {
-        return Right(data);
+        return Right(data.map((e) => e.toEntity()).toList());
       },
     );
   }

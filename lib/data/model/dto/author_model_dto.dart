@@ -1,7 +1,11 @@
 import 'package:palm_book/domain/entities/author_entity.dart';
 
-class AuthorModelDto extends AuthorEntity {
-  AuthorModelDto({required super.name, super.birthYear, super.deathYear});
+class AuthorModelDto {
+  final String name;
+  final int? birthYear;
+  final int? deathYear;
+
+  AuthorModelDto({required this.name, this.birthYear, this.deathYear});
 
   factory AuthorModelDto.fromJson(Map<String, dynamic> json) {
     return AuthorModelDto(
@@ -10,4 +14,7 @@ class AuthorModelDto extends AuthorEntity {
       deathYear: json['death_year'],
     );
   }
+
+  AuthorEntity toEntity() =>
+      AuthorEntity(name: name, birthYear: birthYear, deathYear: deathYear);
 }

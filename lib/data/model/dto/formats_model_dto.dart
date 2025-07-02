@@ -1,7 +1,10 @@
 import 'package:palm_book/domain/entities/formats_entity.dart';
 
-class FormatModelDto extends FormatEntity {
-  FormatModelDto({super.plainText, super.imageJpeg});
+class FormatModelDto {
+  final String? plainText;
+  final String? imageJpeg;
+
+  FormatModelDto({this.plainText, this.imageJpeg});
 
   factory FormatModelDto.fromJson(Map<String, dynamic> json) {
     return FormatModelDto(
@@ -9,4 +12,7 @@ class FormatModelDto extends FormatEntity {
       imageJpeg: json['image/jpeg'],
     );
   }
+
+  FormatEntity toEntity() =>
+      FormatEntity(imageJpeg: imageJpeg, plainText: plainText);
 }
