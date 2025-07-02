@@ -10,8 +10,6 @@ import 'package:palm_book/data/model/dao/liked_book_dao.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MainSetup {
-  static String baseUrl = "https://gutendex.com";
-
   static create() async {
     WidgetsFlutterBinding.ensureInitialized();
 

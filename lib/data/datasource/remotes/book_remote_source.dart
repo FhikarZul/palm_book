@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:palm_book/core/configs/main_setup.dart';
+import 'package:palm_book/core/configs/flavor_config.dart';
 import 'package:palm_book/core/errors/response_error.dart';
 import 'package:palm_book/core/utils/http_client.dart';
 import 'package:palm_book/core/utils/response_parse.dart';
@@ -21,7 +21,9 @@ class BookRemoteSourceImpl extends BookRemoteSource {
   @override
   Future<Either<ResponseException, BookModelDto>> getBook(int id) async {
     try {
-      final response = await dio.get("${MainSetup.baseUrl}/books/$id");
+      final response = await dio.get(
+        "${FlavorConfig.shared.baseUrl}/books/$id",
+      );
 
       if (response.statusCode == 200) {
         return Right(BookModelDto.fromJson(response.data));
@@ -45,7 +47,7 @@ class BookRemoteSourceImpl extends BookRemoteSource {
   }) async {
     try {
       final response = await dio.get(
-        "${MainSetup.baseUrl}/books",
+        "${FlavorConfig.shared.baseUrl}/books",
         query: {'page': page.toString(), 'search': search},
       );
 
