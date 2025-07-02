@@ -14,6 +14,7 @@ import 'package:palm_book/domain/usecases/get_liked_books_usecase.dart';
 import 'package:palm_book/domain/usecases/is_liked_book_usecase.dart';
 import 'package:palm_book/domain/usecases/liked_book_usecase.dart';
 import 'package:palm_book/presentation/module/detail/controller/detail_controller.dart';
+import 'package:palm_book/presentation/module/favorite/controller/favorite_controller.dart';
 
 class DetailBinding implements Bindings {
   @override
@@ -45,6 +46,7 @@ class DetailBinding implements Bindings {
     // controller
     Get.lazyPut(
       () => DetailController(
+        favoriteController: Get.find<FavoriteController>(),
         getBookUsecase: Get.find<GetBookUsecase>(),
         likedBookUsecase: Get.find<LikedBookUsecase>(),
         isLikedBookUsecase: Get.find<IsLikedBookUsecase>(),

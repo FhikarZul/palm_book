@@ -34,16 +34,23 @@ class BaseBinding implements Bindings {
     );
     Get.lazyPut<LikedBookRepository>(
       () => LikedBookRepositoryImpl(Get.find<LikedBookLocalSource>()),
+      fenix: true,
     );
 
     // usecase
     Get.lazyPut(() => GetBookUsecase(Get.find<BookRepository>()));
     Get.lazyPut(() => GetBooksUsecase(Get.find<BookRepository>()));
-    Get.lazyPut(() => GetLikedBooksUsecase(Get.find<LikedBookRepository>()));
+    Get.lazyPut(
+      () => GetLikedBooksUsecase(Get.find<LikedBookRepository>()),
+      fenix: true,
+    );
 
     // controller
     Get.lazyPut(() => BaseController());
     Get.lazyPut(() => HomeController(Get.find<GetBooksUsecase>()));
-    Get.lazyPut(() => FavoriteController(Get.find<GetLikedBooksUsecase>()));
+    Get.lazyPut(
+      () => FavoriteController(Get.find<GetLikedBooksUsecase>()),
+      fenix: true,
+    );
   }
 }

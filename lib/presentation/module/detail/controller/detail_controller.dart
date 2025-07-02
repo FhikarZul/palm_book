@@ -14,7 +14,7 @@ class DetailController extends GetxController {
   final IsLikedBookUsecase isLikedBookUsecase;
   final DeleteLikedBookUsecase deleteLikedBookUsecase;
   final GetLikedBooksUsecase getLikedBooksUsecase;
-  final favoriteController = Get.find<FavoriteController>();
+  final FavoriteController favoriteController;
 
   final id = Get.arguments;
   Rx<BookEntity> book = BookEntity.initial().obs;
@@ -24,6 +24,7 @@ class DetailController extends GetxController {
   RxBool isLikedBook = false.obs;
 
   DetailController({
+    required this.favoriteController,
     required this.getBookUsecase,
     required this.likedBookUsecase,
     required this.isLikedBookUsecase,
