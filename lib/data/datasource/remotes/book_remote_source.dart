@@ -14,14 +14,14 @@ abstract class BookRemoteSource {
 }
 
 class BookRemoteSourceImpl extends BookRemoteSource {
-  final HttpClient dio;
+  final HttpClient httpClient;
 
-  BookRemoteSourceImpl(this.dio);
+  BookRemoteSourceImpl(this.httpClient);
 
   @override
   Future<Either<ResponseException, BookModelDto>> getBook(int id) async {
     try {
-      final response = await dio.get(
+      final response = await httpClient.get(
         "${FlavorConfig.shared.baseUrl}/books/$id",
       );
 
@@ -46,7 +46,7 @@ class BookRemoteSourceImpl extends BookRemoteSource {
     required String search,
   }) async {
     try {
-      final response = await dio.get(
+      final response = await httpClient.get(
         "${FlavorConfig.shared.baseUrl}/books",
         query: {'page': page.toString(), 'search': search},
       );
