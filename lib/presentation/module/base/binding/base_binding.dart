@@ -21,6 +21,7 @@ class BaseBinding implements Bindings {
     // local source
     Get.lazyPut<LikedBookLocalSource>(
       () => LikedBookLocalSourceImpl(Get.find<Box<LikedBookDao>>()),
+      fenix: true,
     );
 
     // remote source
