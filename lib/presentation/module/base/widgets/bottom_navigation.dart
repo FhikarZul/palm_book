@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:palm_book/core/styles/colors.dart';
@@ -66,6 +68,7 @@ class BottomNavigation extends StatelessWidget {
               )
               .toList(),
         ),
+        if (Platform.isIOS) SizedBox(height: 10),
       ],
     );
   }

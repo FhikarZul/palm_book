@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:palm_book/core/styles/colors.dart';
@@ -25,7 +27,7 @@ class _SearchFieldState extends State<SearchField> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 100,
+      height: Platform.isAndroid ? 100 : 117,
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:palm_book/core/styles/colors.dart';
@@ -16,7 +18,7 @@ class FavoriteView extends GetView<FavoriteController> {
       children: [
         SizedBox(
           width: double.infinity,
-          height: 100,
+          height: Platform.isAndroid ? 100 : 117,
           child: Stack(
             children: [
               Image.asset(
@@ -25,16 +27,16 @@ class FavoriteView extends GetView<FavoriteController> {
                 fit: BoxFit.cover,
               ),
               Container(color: kPrimaryMain.withAlpha(80)),
-              SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 14,
-                    vertical: 18,
-                  ),
-                  child: Text(
-                    "Favorite Books",
-                    style: kHeadline.copyWith(color: kNeutral90),
-                  ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 14,
+                  right: 14,
+                  top: 60,
+                  bottom: 12,
+                ),
+                child: Text(
+                  "Favorite Books",
+                  style: kHeadline.copyWith(color: kNeutral90),
                 ),
               ),
             ],

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:palm_book/core/styles/colors.dart';
 import 'package:palm_book/core/styles/typography.dart';
@@ -36,7 +38,12 @@ class ReadButton extends StatelessWidget {
           child: InkWell(
             onTap: onPressed,
             child: Padding(
-              padding: const EdgeInsets.all(10),
+              padding: EdgeInsets.only(
+                left: 10,
+                right: 10,
+                top: 10,
+                bottom: Platform.isAndroid ? 10 : 20,
+              ),
               child: Text(
                 "Read Ebook",
                 style: kButtonText.copyWith(color: kNeutral10),
