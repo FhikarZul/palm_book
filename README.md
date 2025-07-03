@@ -1,16 +1,27 @@
-# palm_book
+# Palm Book Test
 
 A new Flutter project.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Follow these steps to run the project in Visual Studio Code (VSCode):
 
-A few resources to get you started if this is your first Flutter project:
+#### 1. Go to the Run and Debug panel in VSCode.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+![Step 1](images/step-1.png)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+#### 2. Click the Marked Area.
+
+![Step 2](images/step-2.png)
+
+#### 3. Select a Run Mode.
+
+- Launch Development: Runs the app in the development environment.
+- Launch Staging: Runs the app in the staging environment.
+- Launch Production: Runs the app in the production environment.
+
+![Step 3](images/step-3.png)
+
+#### 4. Press the run icon.
+
+![Step 4](images/step-4.png)
